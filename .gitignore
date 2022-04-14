@@ -4,9 +4,7 @@
 .DS_Store
 
 /target/
-/common/target/
-/etianauth-spring-boot-starter/target/
-/store_helper/target/
+/**/target/
 
 
 !.mvn/wrapper/maven-wrapper.jar
