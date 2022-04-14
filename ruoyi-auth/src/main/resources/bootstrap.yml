@@ -9,21 +9,15 @@ spring:
     name: ruoyi-auth
   profiles:
     # 环境配置
-    active: dev
-  main:
-    allow-circular-references: true
-    allow-bean-definition-overriding: true
-  redis:
-    host: 192.168.1.66
-    port: 36379
+    active: prod
   cloud:
     nacos:
       discovery:
         # 服务注册地址
-        server-addr: 192.168.1.66:38848
+        server-addr: 192.168.23.133:8848
       config:
         # 配置中心地址
-        server-addr: 192.168.1.66:38848
+        server-addr: 192.168.23.133:8848
         # 配置文件格式
         file-extension: yml
         # 共享配置

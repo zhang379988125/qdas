@@ -35,3 +35,4 @@
 /nbdist/
 /.nb-gradle/
 ./basic_entity/.mvn
+/logs/
