@@ -3,7 +3,7 @@ services:
   ruoyi-gateway:
     container_name: ruoyi-gateway
     build:
-      context: ./gateway
+      context: ../gateway
       dockerfile: dockerfile
     ports:
       - "8080:8080"
