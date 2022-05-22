@@ -34,6 +34,11 @@ public class MinioConfig
      */
     private String bucketName;
 
+    /**
+     * 文件地址
+     */
+    private String outPath;
+
     public String getUrl()
     {
         return url;
@@ -72,6 +77,14 @@ public class MinioConfig
     public void setBucketName(String bucketName)
     {
         this.bucketName = bucketName;
+    }
+
+    public String getOutPath() {
+        return outPath;
+    }
+
+    public void setOutPath(String outPath) {
+        this.outPath = outPath;
     }
 
     @Bean

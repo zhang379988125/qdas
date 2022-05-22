@@ -11,26 +11,25 @@ import com.ruoyi.file.utils.FileUploadUtils;
  * 
  * @author ruoyi
  */
-@Primary
 @Service
 public class LocalSysFileServiceImpl implements ISysFileService
 {
     /**
      * 资源映射路径 前缀
      */
-    @Value("${file.prefix}")
+    @Value("${file.prefix:}")
     public String localFilePrefix;
 
     /**
      * 域名或本机访问地址
      */
-    @Value("${file.domain}")
+    @Value("${file.domain:}")
     public String domain;
     
     /**
      * 上传文件存储在本地的根路径
      */
-    @Value("${file.path}")
+    @Value("${file.path:}")
     private String localFilePath;
 
     /**
