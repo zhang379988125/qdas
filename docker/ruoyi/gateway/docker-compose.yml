@@ -1,0 +1,10 @@
+version : '3.8'
+services:
+  ruoyi-gateway:
+    container_name: ruoyi-gateway
+    build:
+      context: ./gateway
+      dockerfile: dockerfile
+    ports:
+      - "8080:8080"
+
