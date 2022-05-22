@@ -1,63 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+  <springProperty scope="context" name="spring.application.name" source="spring.application.name"></springProperty>
+  <springProperty scope="context" name="server.port" source="server.port"></springProperty>
     <!-- 日志存放路径 -->
-	<property name="log.path" value="logs/ruoyi-gateway" />
-   <!-- 日志输出格式 -->
-	<property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
+	<property name="log.path" value="logs/${spring.application.name}" />
+
+  <!--日志输出格式：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+  <property name="console.pattern" value="%yellow(%-12(%d{yyyy-MM-dd HH:mm:ss.SSS})) -%highlight(%-5level) [%thread]  %logger{36} - %msg%n"/>
+  <property name="file_log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
 
     <!-- 控制台输出 -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>${log.pattern}</pattern>
-		</encoder>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>${console.pattern}</pattern>
+    </encoder>
 	</appender>
 
     <!-- 系统日志输出 -->
-	<appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
-	    <file>${log.path}/info.log</file>
-        <!-- 循环政策：基于时间创建日志文件 -->
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 日志文件名格式 -->
-			<fileNamePattern>${log.path}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
-			<!-- 日志最大的历史 60天 -->
-			<maxHistory>60</maxHistory>
+	<appender name="file_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!--  日志文件输出的文件名 -->
+			<FileNamePattern>${log.path}/log_%d{yyyy-MM-dd}_%i.log</FileNamePattern>
+			<!-- 日志文件保留天数 -->
+			<MaxHistory>10</MaxHistory>
+			<!-- 日志文件最大尺寸 -->
+			<maxFileSize>1GB</maxFileSize>
 		</rollingPolicy>
-		<encoder>
-			<pattern>${log.pattern}</pattern>
+		<append>true</append>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${file_log.pattern}</pattern>
 		</encoder>
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <!-- 过滤的级别 -->
-            <level>INFO</level>
-            <!-- 匹配时的操作：接收（记录） -->
-            <onMatch>ACCEPT</onMatch>
-            <!-- 不匹配时的操作：拒绝（不记录） -->
-            <onMismatch>DENY</onMismatch>
-        </filter>
 	</appender>
 
-    <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-	    <file>${log.path}/error.log</file>
-        <!-- 循环政策：基于时间创建日志文件 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 日志文件名格式 -->
-            <fileNamePattern>${log.path}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
-			<!-- 日志最大的历史 60天 -->
-			<maxHistory>60</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${log.pattern}</pattern>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <!-- 过滤的级别 -->
-            <level>ERROR</level>
-			<!-- 匹配时的操作：接收（记录） -->
-            <onMatch>ACCEPT</onMatch>
-			<!-- 不匹配时的操作：拒绝（不记录） -->
-            <onMismatch>DENY</onMismatch>
-        </filter>
-    </appender>
-
-    <!-- 系统模块日志级别控制  -->
+  <!-- 系统模块日志级别控制  -->
 	<logger name="com.ruoyi" level="info" />
 	<!-- Spring日志级别控制  -->
 	<logger name="org.springframework" level="warn" />
@@ -67,8 +43,8 @@
 	</root>
 	
 	<!--系统操作日志-->
-    <root level="info">
-        <appender-ref ref="file_info" />
-        <appender-ref ref="file_error" />
-    </root>
+  <root level="info">
+      <appender-ref ref="file_log" />
+  </root>
+
 </configuration>
